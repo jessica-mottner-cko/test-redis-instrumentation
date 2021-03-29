@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+
+  redis:
+    container_name: redis
+    image: redis
+    hostname: redis
+    ports:
+      - 6379:6379
+  
+  # http://192.168.99.100:8081/
+  redis-ui:
+    container_name: redis-ui
+    image: rediscommander/redis-commander
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    restart: always
+    ports:
+      - "8081:8081"
+
+  # http://192.168.99.100:9411/zipkin/
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin-slim
+    ports: 
+      - 9411:9411
